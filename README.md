@@ -113,12 +113,6 @@ INSERT IGNORE INTO usuarios (username, password, rol, paciente_id, profesional_i
 VALUES ('profesional@test.cl', '1234', 'PROFESIONAL', NULL, 1, TRUE);
 ```
 
-Si la tabla `profesionales` fue creada antes y falta `fecha_creacion`, ejecutar:
-
-```sql
-ALTER TABLE profesionales ADD COLUMN fecha_creacion DATETIME;
-```
-
 ## Pruebas unitarias agregadas
 
 Se agregaron pruebas unitarias con JUnit 5 y Mockito para validar la lógica principal sin depender de Postman ni de MySQL real:
