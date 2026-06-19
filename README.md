@@ -121,10 +121,5 @@ Servidor disponible en:
 
 http://localhost:8080
 
-## Autor
-
-Damian Rigoletti
-
-Proyecto académico y de desarrollo para la plataforma MindLift.
 
 
