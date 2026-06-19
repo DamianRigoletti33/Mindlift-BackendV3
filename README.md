@@ -1,134 +1,112 @@
-# MindLift API Local
+MindLift Backend V3
 
-Backend local en Spring Boot para la app Android MindLift.
+Backend desarrollado en Spring Boot para la plataforma MindLift, orientada a la gestión de pacientes en rehabilitación, movilidad reducida y adultos mayores.
 
-## Base de datos
+Descripción
 
-Usa MySQL local:
+MindLift es una plataforma que permite registrar pacientes y profesionales de la salud, gestionar usuarios y realizar autenticación mediante una API REST conectada a MySQL.
 
-- Base de datos: `mindlift_app_db`
-- Puerto MySQL: `3306`
-- Backend: `http://localhost:8080`
+Tecnologías utilizadas
+Java 21
+Spring Boot 4
+Spring Data JPA
+Hibernate
+MySQL 8
+Maven
+JUnit 5
+Mockito
+Postman
+Arquitectura
 
-## Ejecutar
+Cliente Android
+↓
+API REST (Spring Boot)
+↓
+JPA / Hibernate
+↓
+MySQL
 
-```bash
-mvn spring-boot:run
-```
+Funcionalidades implementadas
+Autenticación
+Inicio de sesión de pacientes
+Inicio de sesión de profesionales
+Validación de credenciales
+Control de acceso mediante roles
+Gestión de pacientes
+Registro de pacientes
+Consulta de pacientes registrados
+Persistencia en MySQL
+Gestión de profesionales
+Registro de profesionales
+Consulta de profesionales registrados
+Persistencia en MySQL
+Gestión de usuarios
+Creación automática de usuario al registrar pacientes
+Creación automática de usuario al registrar profesionales
+Asociación de usuarios con perfiles clínicos
+Endpoints principales
 
-## Endpoints principales
+POST /api/auth/login
 
-### Salud
+GET /api/pacientes
+POST /api/pacientes
 
-```http
-GET http://localhost:8080/api/health
-```
+GET /api/profesionales
+POST /api/profesionales
 
-### Pacientes
+GET /api/usuarios
 
-```http
-GET    http://localhost:8080/api/pacientes
-GET    http://localhost:8080/api/pacientes/{id}
-POST   http://localhost:8080/api/pacientes
-PUT    http://localhost:8080/api/pacientes/{id}
-DELETE http://localhost:8080/api/pacientes/{id}
-```
+Evidencias de funcionamiento
+Pruebas Postman
+Login profesional exitoso
+Login paciente exitoso
+Login fallido (credenciales incorrectas)
+Consulta de pacientes
+Consulta de profesionales
+Registro de profesionales
+Creación automática de usuarios
+Pruebas unitarias
 
-### Profesionales
+Resultado obtenido:
 
-```http
-GET    http://localhost:8080/api/profesionales
-POST   http://localhost:8080/api/profesionales
-```
+Tests run: 5
+Failures: 0
+Errors: 0
+BUILD SUCCESS
 
-### Ejercicios
+Pruebas realizadas:
 
-```http
-GET    http://localhost:8080/api/ejercicios
-POST   http://localhost:8080/api/ejercicios
-```
+AuthControllerTest
+PacienteControllerTest
+ProfesionalControllerTest
+Base de datos
 
-### Rutinas
+Motor utilizado:
 
-```http
-GET    http://localhost:8080/api/rutinas
-GET    http://localhost:8080/api/rutinas?pacienteId=1
-POST   http://localhost:8080/api/rutinas
-```
+MySQL 8
 
-### Progreso
+Tablas principales:
 
-```http
-GET    http://localhost:8080/api/progreso
-GET    http://localhost:8080/api/progreso?pacienteId=1
-POST   http://localhost:8080/api/progreso
-```
+usuarios
+pacientes
+profesionales
+rutinas
+ejercicios
+progreso
+Ejecución local
+Crear base de datos MySQL.
+Configurar application.properties.
+Ejecutar:
 
-### Revisión IA
+mvn spring-boot
 
-```http
-GET    http://localhost:8080/api/revision-ia
-GET    http://localhost:8080/api/revision-ia?estado=PENDIENTE
-POST   http://localhost:8080/api/revision-ia
-PATCH  http://localhost:8080/api/revision-ia/{id}/estado?estado=APROBADA
-```
+Servidor disponible en:
 
-### Cargar datos demo
+http://localhost:8080
 
-```http
-POST http://localhost:8080/api/demo/cargar
-```
+Autor
 
-## URL para Android
+Damian Rigoletti
+Benjamin Saenz
 
-- Emulador Android: `http://10.0.2.2:8080`
-- Celular físico: `http://IP_DE_TU_PC:8080`
 
-## Login local
-
-Endpoint:
-
-```http
-POST http://localhost:8080/api/auth/login
-```
-
-Body:
-
-```json
-{
-  "username": "profesional@test.cl",
-  "password": "1234"
-}
-```
-
-Usuarios de prueba en MySQL:
-
-```sql
-USE mindlift_app_db;
-
-INSERT IGNORE INTO usuarios (username, password, rol, paciente_id, profesional_id, activo)
-VALUES ('paciente@test.cl', '1234', 'PACIENTE', 1, NULL, TRUE);
-
-INSERT IGNORE INTO usuarios (username, password, rol, paciente_id, profesional_id, activo)
-VALUES ('profesional@test.cl', '1234', 'PROFESIONAL', NULL, 1, TRUE);
-```
-
-## Pruebas unitarias agregadas
-
-Se agregaron pruebas unitarias con JUnit 5 y Mockito para validar la lógica principal sin depender de Postman ni de MySQL real:
-
-- `AuthControllerTest`: valida login correcto, contraseña incorrecta y usuario inexistente.
-- `ProfesionalControllerTest`: valida que al registrar profesional se cree automáticamente un usuario con rol `PROFESIONAL`.
-- `PacienteControllerTest`: valida que al registrar paciente se cree automáticamente un usuario con rol `PACIENTE`.
-
-Para ejecutar las pruebas:
-
-```bash
-mvn test
-```
-
-Para iniciar el backend local:
-
-```bash
-mvn spring-boot:run
-```
